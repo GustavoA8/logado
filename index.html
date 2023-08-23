@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animação</title>
+    <style>
+    #container {
+        margin:3% auto;
+        width: 50%;
+        justify-content: center;
+        text-align: center;
+        border: solid 2px white;
+        border-radius: 10px;
+        height: 900px;
+     }
+     img{
+        margin-top: 2%;
+        width: 70%;
+     }
+    body{
+            background-color: black;
+        }
+    #texto {
+            max-width: 480px;
+            text-align: center;
+            margin: 60px auto;
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+        }
+
+    #texto:after {
+            content: '|';
+            margin-left: 5px;
+            opacity: 1;
+            animation: pisca .7s infinite;
+        }
+
+        /* Animação aplicada ao content referente a classe *.titulo-principal* resultando num efeito de cursor piscando. */
+
+    @keyframes pisca {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        
+        <img id="quadro" src="imagens/0.png" alt="">
+        <p id="texto"></p>
+
+    </div>
+    <script src="js/index.js" type="module"></script>
+    <script type="module">
+        import { Animacao } from './js/index.js'
+        let animacao = new Animacao();
+        let img = document.querySelector("#quadro")
+
+        
+        const texto = document.querySelector("#texto")
+        animacao.addContador()
+        
+
+        const fala = [];
+        fala[0] = "Após uma longa noite de programação em seu notebook, kai se deparou com um livro peculiar escondido nas profundezas de sua estante empoeirada."
+        fala[1] = 'A capa desgastada ostentava o título "Broken Code Infinite" Kai sentiu um impulso irresistível de ler este livro misterioso.'
+        fala[2] = "Enquanto mergulhava na leitura, as palavras começaram a dançar diante de seus olhos cansados, e uma sonolência mágica o envolveu."
+        fala[3] = "Quando acordou, ele estava em um mundo completamente novo, um mundo onde a tecnologia ultrapassava os limites da imaginação. A jornada de Kai para compreender e navegar por esse mundo de tecnologia extraordinária estava prestes a começar."
+
+        
+
+        texto.innerHTML = fala[0]
+        let botao = document.querySelector("body")
+
+        function typeWrite(elemento) {
+            const textoArray = elemento.innerHTML.split('');
+            elemento.innerHTML = ' ';
+            textoArray.forEach(function (letra, i) {
+
+                setTimeout( ()=> {
+                    
+                    elemento.innerHTML += letra;
+                }, 75*i )
+
+            });
+        }
+        typeWrite(texto);
+
+
+       
+        let TrocarFala =()=> {
+            img.src="imagens/"+animacao.getContadorImg()+".png"
+            console.log(animacao.getContadorImg())
+            animacao.addContadorImg()
+            texto.innerHTML=fala[animacao.getContador()]
+            typeWrite(texto)
+            animacao.addContador()
+            
+
+        }
+
+        botao.addEventListener('click', TrocarFala)
+
+
+    //   setTimeout(()=>{
+    //    fala.forEach(linha=>{
+    //     texto.innerHTML=linha
+    //    })
+    //     },5000)
+
+
+    </script>
+</body>
+</html>
